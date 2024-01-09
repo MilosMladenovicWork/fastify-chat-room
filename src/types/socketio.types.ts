@@ -1,18 +1,18 @@
-interface ServerToClientEvents {
+export interface ServerToClientEvents {
   noArg: () => void;
   basicEmit: (a: number, b: string, c: Buffer) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
 }
 
-interface ClientToServerEvents {
+export interface ClientToServerEvents {
   hello: () => void;
 }
 
-interface InterServerEvents {
+export interface InterServerEvents {
   ping: () => void;
 }
 
-interface SocketData {
+export interface SocketData {
   name: string;
   age: number;
 }

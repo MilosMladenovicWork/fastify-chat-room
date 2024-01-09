@@ -1,18 +1,30 @@
 import fastify from "fastify";
-const server = fastify();
+import { Server } from "socket.io";
+import { fastifySocketIoPlugin } from "./plugins/fastify-socketio.plugin";
+import {
+  ClientToServerEvents,
+  InterServerEvents,
+  ServerToClientEvents,
+  SocketData,
+} from "./types/socketio.types";
 
-// Declare a route
-server.get("/", function (request, reply) {
-  reply.send({ hello: "world" });
+const app = fastify();
+
+app.register(fastifySocketIoPlugin);
+
+app.get("/", (req: any, reply: any) => {
+  app.io.emit("basicEmit", 1, "string", new Buffer("Some string"));
 });
 
-// Run the server!
-server.listen({ port: 3000 }, function (err, address) {
-  if (err) {
-    console.log(err);
-    server.log.error(err);
-    process.exit(1);
+app.listen({ port: 3000 });
+
+declare module "fastify" {
+  interface FastifyInstance {
+    io: Server<
+      ClientToServerEvents,
+      ServerToClientEvents,
+      InterServerEvents,
+      SocketData
+    >;
   }
-
-  console.log(`Server is now listening on ${address}`);
-});
+}
