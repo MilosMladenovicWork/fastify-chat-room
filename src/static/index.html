@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Look at the server log to see if the connection happened</h1>
-    <button id="emiter">Emit event</button>
+    <button id="emitter">Emit event</button>
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
@@ -18,7 +18,7 @@
         console.log(`Username: ${username}, Message: ${message}`)
       })
 
-      document.querySelector('#emiter').addEventListener('click', () =>{
+      document.querySelector('#emitter').addEventListener('click', () =>{
         console.log('Message sent')
         socket.emit('message', {username: 'Client', message: 'Client message'})
       })
