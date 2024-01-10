@@ -1,8 +1,8 @@
 import { Socket } from "socket.io";
 import {
   ClientToServerEvents,
-  ServerToClientEvents,
   InterServerEvents,
+  ServerToClientEvents,
   SocketData,
 } from "../types/socketio.types";
 
@@ -16,7 +16,23 @@ export const messageListener = ({
     SocketData
   >;
 }) => {
-  socket.on("message", ({ username, message }) => {
-    socket.emit("message", { username, message });
-  });
+  socket.on("message", ({ username, message }) =>
+    messageListenerHandler({ socket }, { username, message })
+  );
+};
+
+const messageListenerHandler = (
+  {
+    socket,
+  }: {
+    socket: Socket<
+      ClientToServerEvents,
+      ServerToClientEvents,
+      InterServerEvents,
+      SocketData
+    >;
+  },
+  { username, message }: { username: string; message: string }
+) => {
+  socket.emit("message", { username, message });
 };
