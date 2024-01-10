@@ -8,9 +8,16 @@ import {
   SocketData,
 } from "./types/socketio.types";
 
+import fastifyStatic from "@fastify/static";
+import path from "path";
+
 const app = fastify();
 
 app.register(fastifySocketIoPlugin);
+app.register(fastifyStatic, {
+  root: path.join(__dirname, "static"),
+  prefix: "/static/",
+});
 
 app.get("/", (req: any, reply: any) => {
   app.io.emit("message", { username: "User", message: "Hey" });
