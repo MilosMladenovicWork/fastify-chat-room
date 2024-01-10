@@ -19,11 +19,16 @@ app.register(fastifyStatic, {
   prefix: "/static/",
 });
 
-app.get("/", (req: any, reply: any) => {
-  app.io.emit("message", { username: "User", message: "Hey" });
-});
-
 app.listen({ port: 3000 });
+
+app.ready((err) => {
+  if (err) throw err;
+  app.io.sockets.on("connection", (socket) => {
+    socket.on("message", ({ username, message }) => {
+      socket.emit("message", { username, message });
+    });
+  });
+});
 
 declare module "fastify" {
   interface FastifyInstance {
