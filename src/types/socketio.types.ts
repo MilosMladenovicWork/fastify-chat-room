@@ -9,7 +9,13 @@ export interface ServerToClientEvents {
 }
 
 export interface ClientToServerEvents {
-  hello: () => void;
+  message: ({
+    username,
+    message,
+  }: {
+    username: string;
+    message: string;
+  }) => void;
 }
 
 export interface InterServerEvents {
