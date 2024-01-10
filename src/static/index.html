@@ -9,6 +9,15 @@
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io();
+    const socket = io.connect('http://localhost:3000/');
+
+    socket.on('connect',function(){
+      socket.on('message', ({username, message}) => {
+        console.log('Message received')
+        console.log(`Username: ${username}, Message: ${message}`)
+      })
+  
+      socket.emit('message', {username: 'Client', message: 'Client message'})
+  });
   </script>
 </html>
