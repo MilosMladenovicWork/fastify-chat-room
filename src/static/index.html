@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <h1>Look at the server log to see if the connection happened</h1>
+    <input type="text" id="username" placeholder="username"/>
+    <br/>
+    <textarea id="message" placeholder="message"></textarea>
+    <br/>
     <button id="submit-button">Send message</button>
     <div id="messages"></div>
   </body>
@@ -26,8 +29,12 @@
 
       const submitButtonElement = document.querySelector('#submit-button')
 
+      const usernameElement = document.querySelector('#username')
+
+      const messageElement = document.querySelector('#message')
+
       submitButtonElement.addEventListener('click', () =>
-        socket.emit('message', {username: 'Client', message: 'Client message'})
+        socket.emit('message', {username: usernameElement.value, message: messageElement.value})
       )
   
   });
