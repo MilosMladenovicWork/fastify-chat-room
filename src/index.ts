@@ -10,6 +10,7 @@ import {
 
 import fastifyStatic from "@fastify/static";
 import { fastifyStaticConfig } from "./config/fastify-static.config";
+import { messageListener } from "./socket-event-listeners/message.listener";
 
 const app = fastify();
 
@@ -21,9 +22,7 @@ app.listen({ port: 3000 });
 app.ready((err) => {
   if (err) throw err;
   app.io.sockets.on("connection", (socket) => {
-    socket.on("message", ({ username, message }) => {
-      socket.emit("message", { username, message });
-    });
+    messageListener({ socket });
   });
 });
 
