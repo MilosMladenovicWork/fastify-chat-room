@@ -26,10 +26,9 @@
 
       const submitButtonElement = document.querySelector('#submit-button')
 
-      submitButtonElement.addEventListener('click', () =>{
-        console.log('Message sent')
+      submitButtonElement.addEventListener('click', () =>
         socket.emit('message', {username: 'Client', message: 'Client message'})
-      })
+      )
   
   });
   </script>
