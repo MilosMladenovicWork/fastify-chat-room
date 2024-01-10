@@ -22,7 +22,7 @@ app.listen({ port: 3000 });
 app.ready((err) => {
   if (err) throw err;
   app.io.sockets.on("connection", (socket) => {
-    messageListener({ socket });
+    messageListener({ socket, socketIo: app.io });
   });
 });
 

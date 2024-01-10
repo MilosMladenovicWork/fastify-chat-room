@@ -1,4 +1,4 @@
-import { Socket } from "socket.io";
+import { Server, Socket } from "socket.io";
 import {
   ClientToServerEvents,
   InterServerEvents,
@@ -8,6 +8,7 @@ import {
 
 export const messageListener = ({
   socket,
+  socketIo,
 }: {
   socket: Socket<
     ClientToServerEvents,
@@ -15,17 +16,23 @@ export const messageListener = ({
     InterServerEvents,
     SocketData
   >;
+  socketIo: Server<
+    ClientToServerEvents,
+    ServerToClientEvents,
+    InterServerEvents,
+    SocketData
+  >;
 }) => {
   socket.on("message", ({ username, message }) =>
-    messageListenerHandler({ socket }, { username, message })
+    messageListenerHandler({ socketIo }, { username, message })
   );
 };
 
 const messageListenerHandler = (
   {
-    socket,
+    socketIo,
   }: {
-    socket: Socket<
+    socketIo: Server<
       ClientToServerEvents,
       ServerToClientEvents,
       InterServerEvents,
@@ -34,5 +41,5 @@ const messageListenerHandler = (
   },
   { username, message }: { username: string; message: string }
 ) => {
-  socket.emit("message", { username, message });
+  socketIo.sockets.emit("message", { username, message });
 };
