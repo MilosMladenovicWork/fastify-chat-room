@@ -9,15 +9,12 @@ import {
 } from "./types/socketio.types";
 
 import fastifyStatic from "@fastify/static";
-import path from "path";
+import { fastifyStaticConfig } from "./config/fastify-static.config";
 
 const app = fastify();
 
 app.register(fastifySocketIoPlugin);
-app.register(fastifyStatic, {
-  root: path.join(__dirname, "static"),
-  prefix: "/static/",
-});
+app.register(fastifyStatic, fastifyStaticConfig);
 
 app.listen({ port: 3000 });
 
