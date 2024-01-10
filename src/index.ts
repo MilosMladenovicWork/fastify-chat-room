@@ -13,7 +13,7 @@ const app = fastify();
 app.register(fastifySocketIoPlugin);
 
 app.get("/", (req: any, reply: any) => {
-  app.io.emit("basicEmit", 1, "string", new Buffer("Some string"));
+  app.io.emit("message", { username: "User", message: "Hey" });
 });
 
 app.listen({ port: 3000 });
