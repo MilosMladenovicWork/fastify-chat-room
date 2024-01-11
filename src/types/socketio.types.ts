@@ -12,9 +12,11 @@ export interface ClientToServerEvents {
   message: ({
     username,
     message,
+    roomName,
   }: {
     username: string;
     message: string;
+    roomName: string;
   }) => void;
   join_room: ({ roomName }: { roomName: string }) => void;
 }
