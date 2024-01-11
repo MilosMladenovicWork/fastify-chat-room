@@ -1,3 +1,5 @@
+import { Server, Socket } from "socket.io";
+
 export interface ServerToClientEvents {
   message: ({
     username,
@@ -29,3 +31,17 @@ export interface SocketData {
   name: string;
   age: number;
 }
+
+export type SocketIoServer = Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>;
+
+export type SocketIoSocket = Socket<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>;
