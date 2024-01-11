@@ -16,6 +16,7 @@ export interface ClientToServerEvents {
     username: string;
     message: string;
   }) => void;
+  join_room: ({ roomName }: { roomName: string }) => void;
 }
 
 export interface InterServerEvents {
