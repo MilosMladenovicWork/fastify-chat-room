@@ -1,51 +1,17 @@
-import { Server, Socket } from "socket.io";
 import { rooms } from "../state/rooms";
-import {
-  ClientToServerEvents,
-  InterServerEvents,
-  ServerToClientEvents,
-  SocketData,
-} from "../types/socketio.types";
+import { SocketIoSocket } from "../types/socketio.types";
 
-export const joinRoomListener = ({
-  socket,
-  socketIo,
-}: {
-  socket: Socket<
-    ClientToServerEvents,
-    ServerToClientEvents,
-    InterServerEvents,
-    SocketData
-  >;
-  socketIo: Server<
-    ClientToServerEvents,
-    ServerToClientEvents,
-    InterServerEvents,
-    SocketData
-  >;
-}) => {
+export const joinRoomListener = ({ socket }: { socket: SocketIoSocket }) => {
   socket.on("join_room", ({ roomName }) =>
-    joinRoomListenerHandler({ socket, socketIo }, { roomName })
+    joinRoomListenerHandler({ socket }, { roomName })
   );
 };
 
 const joinRoomListenerHandler = (
   {
     socket,
-    socketIo,
   }: {
-    socket: Socket<
-      ClientToServerEvents,
-      ServerToClientEvents,
-      InterServerEvents,
-      SocketData
-    >;
-    socketIo: Server<
-      ClientToServerEvents,
-      ServerToClientEvents,
-      InterServerEvents,
-      SocketData
-    >;
+    socket: SocketIoSocket;
   },
   { roomName }: { roomName: string }
 ) => {

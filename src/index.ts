@@ -24,7 +24,7 @@ app.ready((err) => {
   if (err) throw err;
   app.io.sockets.on("connection", (socket) => {
     messageListener({ socket, socketIo: app.io });
-    joinRoomListener({ socket, socketIo: app.io });
+    joinRoomListener({ socket });
   });
 });
 
