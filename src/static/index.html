@@ -31,18 +31,19 @@
 
       const submitButtonElement = document.querySelector('#submit-button')
 
+      const roomInputElement = document.querySelector('#room')
 
-      document.querySelector('#room')?.addEventListener('input', (event) => {
+      roomInputElement?.addEventListener('input', (event) => {
         socket.emit('join_room', {roomName:event.target.value})
       })
 
-      const usernameValue = document.querySelector('#username')?.value
+      submitButtonElement.addEventListener('click', () => {
+        const usernameValue = document.querySelector('#username')?.value
+        const messageValue = document.querySelector('#message')?.value
+        const roomNameValue = roomInputElement?.value;
 
-      const messageValue = document.querySelector('#message')?.value
-
-      submitButtonElement.addEventListener('click', () =>
-        socket.emit('message', {username: usernameValue, message: messageValue})
-      )
+        socket.emit('message', {username: usernameValue, message: messageValue, roomName: roomNameValue})
+      })
   
   });
   </script>
