@@ -33,7 +33,7 @@
 
 
       document.querySelector('#room')?.addEventListener('input', (event) => {
-        console.log(event.target.value)
+        socket.emit('join_room', {roomName:event.target.value})
       })
 
       const usernameValue = document.querySelector('#username')?.value
