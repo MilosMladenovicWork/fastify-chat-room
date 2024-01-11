@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
+    <input type="text" id="room" placeholder="room"/>
+    <br/>
     <input type="text" id="username" placeholder="username"/>
     <br/>
     <textarea id="message" placeholder="message"></textarea>
@@ -29,12 +31,17 @@
 
       const submitButtonElement = document.querySelector('#submit-button')
 
-      const usernameElement = document.querySelector('#username')
 
-      const messageElement = document.querySelector('#message')
+      document.querySelector('#room')?.addEventListener('input', (event) => {
+        console.log(event.target.value)
+      })
+
+      const usernameValue = document.querySelector('#username')?.value
+
+      const messageValue = document.querySelector('#message')?.value
 
       submitButtonElement.addEventListener('click', () =>
-        socket.emit('message', {username: usernameElement.value, message: messageElement.value})
+        socket.emit('message', {username: usernameValue, message: messageValue})
       )
   
   });
