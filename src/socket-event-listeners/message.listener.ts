@@ -23,8 +23,8 @@ export const messageListener = ({
     SocketData
   >;
 }) => {
-  socket.on("message", ({ username, message }) =>
-    messageListenerHandler({ socketIo }, { username, message })
+  socket.on("message", ({ username, message, roomName }) =>
+    messageListenerHandler({ socketIo }, { username, message, roomName })
   );
 };
 
@@ -39,7 +39,11 @@ const messageListenerHandler = (
       SocketData
     >;
   },
-  { username, message }: { username: string; message: string }
+  {
+    username,
+    message,
+    roomName,
+  }: { username: string; message: string; roomName: string }
 ) => {
-  socketIo.sockets.emit("message", { username, message });
+  socketIo.to(roomName).emit("message", { username, message });
 };
