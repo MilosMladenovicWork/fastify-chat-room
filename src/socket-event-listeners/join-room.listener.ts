@@ -53,5 +53,9 @@ const joinRoomListenerHandler = (
     rooms.push(roomName);
   }
 
+  for (const room of rooms) {
+    socket.leave(room);
+  }
+
   socket.join(roomName);
 };
