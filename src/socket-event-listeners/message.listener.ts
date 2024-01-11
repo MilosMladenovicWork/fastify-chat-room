@@ -1,27 +1,19 @@
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import {
   ClientToServerEvents,
   InterServerEvents,
   ServerToClientEvents,
   SocketData,
+  SocketIoServer,
+  SocketIoSocket,
 } from "../types/socketio.types";
 
 export const messageListener = ({
   socket,
   socketIo,
 }: {
-  socket: Socket<
-    ClientToServerEvents,
-    ServerToClientEvents,
-    InterServerEvents,
-    SocketData
-  >;
-  socketIo: Server<
-    ClientToServerEvents,
-    ServerToClientEvents,
-    InterServerEvents,
-    SocketData
-  >;
+  socket: SocketIoSocket;
+  socketIo: SocketIoServer;
 }) => {
   socket.on("message", ({ username, message, roomName }) =>
     messageListenerHandler({ socketIo }, { username, message, roomName })
