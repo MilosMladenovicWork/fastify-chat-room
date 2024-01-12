@@ -17,6 +17,8 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io.connect('http://localhost:3000/');
+    
+    socket.on('connect',socketConnectEventHandler);
 
     const socketConnectEventHandler = () => {
       socket.on('message', socketMessageEventHandler)
@@ -28,8 +30,6 @@
       submitButtonElement.addEventListener('click', submitClickEventHandler)
 
     }
-    
-    socket.on('connect',socketConnectEventHandler);
 
         
     const socketMessageEventHandler = ({username, message}) => {
