@@ -31,7 +31,7 @@
 
       const usernameElement = document.querySelector('#username')
       
-      socket.on('typing_message', ({username}) => {
+      const socketTypingMessageEventHandler = ({username}) => {
         if(username === usernameElement.value){
           return;
         }
@@ -54,7 +54,9 @@
             messageElement.remove()
           }, 5000)
         }
-      })
+      }
+
+      socket.on('typing_message', socketTypingMessageEventHandler)
 
       const submitButtonElement = document.querySelector('#submit-button')
 
