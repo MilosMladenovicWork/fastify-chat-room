@@ -29,6 +29,23 @@
         messagesContainer.append(messageElement)
       })
 
+      socket.on('typing_message', ({username}) => {
+        const messagesContainer = document.querySelector('#messages');
+
+        const userIsTypingElement = messagesContainer.querySelector(`#${username}`)
+        
+
+        if(!userIsTypingElement){
+          const messageElement = document.createElement('p')
+  
+          messageElement.setAttribute('id', username)
+          
+          messageElement.innerText = `Username: ${username}\n is typing...`
+          
+          messagesContainer.append(messageElement)
+        }
+      })
+
       const submitButtonElement = document.querySelector('#submit-button')
 
       const roomInputElement = document.querySelector('#room')
