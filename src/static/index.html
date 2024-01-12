@@ -67,9 +67,11 @@
 
       const messageElement = document.querySelector('#message')
 
-      messageElement?.addEventListener('input', (event) => {
+      const messageInputEventHandler = (event) => {
         socket.emit('typing_message', {roomName: roomInputElement.value, username: usernameElement?.value})
-      })
+      }
+
+      messageElement?.addEventListener('input', messageInputEventHandler)
 
       const submitClickEventHandler = () => {
         const usernameValue = usernameElement?.value
