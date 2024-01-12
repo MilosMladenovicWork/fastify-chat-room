@@ -8,6 +8,7 @@ export interface ServerToClientEvents {
     username: string;
     message: string;
   }) => void;
+  typing_message: ({ username }: { username: string }) => void;
 }
 
 export interface ClientToServerEvents {
@@ -21,6 +22,13 @@ export interface ClientToServerEvents {
     roomName: string;
   }) => void;
   join_room: ({ roomName }: { roomName: string }) => void;
+  typing_message: ({
+    username,
+    roomName,
+  }: {
+    username: string;
+    roomName: string;
+  }) => void;
 }
 
 export interface InterServerEvents {
