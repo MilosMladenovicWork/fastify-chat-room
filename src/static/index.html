@@ -19,7 +19,7 @@
     const socket = io.connect('http://localhost:3000/');
     
     socket.on('connect',function(){
-      socket.on('message', ({username, message}) => {
+      const socketMessageEventHandler = ({username, message}) => {
         const messagesContainer = document.querySelector('#messages');
         
         const messageElement = document.createElement('p')
@@ -27,7 +27,8 @@
         messageElement.innerText = `Username: ${username}\n Message: ${message}`
         
         messagesContainer.append(messageElement)
-      })
+      }
+      socket.on('message', socketMessageEventHandler)
 
       const usernameElement = document.querySelector('#username')
       
