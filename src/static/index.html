@@ -60,9 +60,11 @@
 
       const roomInputElement = document.querySelector('#room')
 
-      roomInputElement?.addEventListener('input', (event) => {
+      const roomInputEventHandler = (event) => {
         socket.emit('join_room', {roomName:event.target.value})
-      })
+      }
+
+      roomInputElement?.addEventListener('input', roomInputEventHandler)
 
 
       const messageElement = document.querySelector('#message')
