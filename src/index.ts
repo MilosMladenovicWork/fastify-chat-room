@@ -12,6 +12,7 @@ import fastifyStatic from "@fastify/static";
 import { fastifyStaticConfig } from "./config/fastify-static.config";
 import { joinRoomListener } from "./socket-event-listeners/join-room.listener";
 import { messageListener } from "./socket-event-listeners/message.listener";
+import { typingMessageListener } from "./socket-event-listeners/typing-message.listener";
 
 const app = fastify();
 
@@ -25,6 +26,7 @@ app.ready((err) => {
   app.io.sockets.on("connection", (socket) => {
     messageListener({ socket, socketIo: app.io });
     joinRoomListener({ socket });
+    typingMessageListener({ socket, socketIo: app.io });
   });
 });
 
