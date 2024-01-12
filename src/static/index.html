@@ -43,6 +43,10 @@
           messageElement.innerText = `Username: ${username}\n is typing...`
           
           messagesContainer.append(messageElement)
+          
+          setTimeout(() => {
+            messageElement.remove()
+          }, 5000)
         }
       })
 
