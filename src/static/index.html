@@ -19,77 +19,82 @@
     const socket = io.connect('http://localhost:3000/');
 
     const socketConnectEventHandler = () => {
-      const socketMessageEventHandler = ({username, message}) => {
-        const messagesContainer = document.querySelector('#messages');
-        
-        const messageElement = document.createElement('p')
-        
-        messageElement.innerText = `Username: ${username}\n Message: ${message}`
-        
-        messagesContainer.append(messageElement)
-      }
       socket.on('message', socketMessageEventHandler)
-
-      const usernameElement = document.querySelector('#username')
-      
-      const socketTypingMessageEventHandler = ({username}) => {
-        if(username === usernameElement.value){
-          return;
-        }
-
-        const messagesContainer = document.querySelector('#messages');
-
-        const userIsTypingElement = messagesContainer.querySelector(`#${username}`)
-        
-
-        if(!userIsTypingElement){
-          const messageElement = document.createElement('p')
-  
-          messageElement.setAttribute('id', username)
-          
-          messageElement.innerText = `Username: ${username}\n is typing...`
-          
-          messagesContainer.append(messageElement)
-          
-          setTimeout(() => {
-            messageElement.remove()
-          }, 5000)
-        }
-      }
 
       socket.on('typing_message', socketTypingMessageEventHandler)
 
-      const submitButtonElement = document.querySelector('#submit-button')
-
-      const roomInputElement = document.querySelector('#room')
-
-      const roomInputEventHandler = (event) => {
-        socket.emit('join_room', {roomName:event.target.value})
-      }
-
-      roomInputElement?.addEventListener('input', roomInputEventHandler)
-
-
-      const messageElement = document.querySelector('#message')
-
-      const messageInputEventHandler = (event) => {
-        socket.emit('typing_message', {roomName: roomInputElement.value, username: usernameElement?.value})
-      }
-
       messageElement?.addEventListener('input', messageInputEventHandler)
-
-      const submitClickEventHandler = () => {
-        const usernameValue = usernameElement?.value
-        const messageValue = messageElement?.value
-        const roomNameValue = roomInputElement?.value;
-
-        socket.emit('message', {username: usernameValue, message: messageValue, roomName: roomNameValue})
-      }
 
       submitButtonElement.addEventListener('click', submitClickEventHandler)
 
     }
     
     socket.on('connect',socketConnectEventHandler);
+
+        
+    const socketMessageEventHandler = ({username, message}) => {
+      const messagesContainer = document.querySelector('#messages');
+      
+      const messageElement = document.createElement('p')
+      
+      messageElement.innerText = `Username: ${username}\n Message: ${message}`
+      
+      messagesContainer.append(messageElement)
+    }
+
+    const usernameElement = document.querySelector('#username')
+      
+    const socketTypingMessageEventHandler = ({username}) => {
+      if(username === usernameElement.value){
+        return;
+      }
+
+      const messagesContainer = document.querySelector('#messages');
+
+      const userIsTypingElement = messagesContainer.querySelector(`#${username}`)
+      
+
+      if(!userIsTypingElement){
+        const messageElement = document.createElement('p')
+
+        messageElement.setAttribute('id', username)
+        
+        messageElement.innerText = `Username: ${username}\n is typing...`
+        
+        messagesContainer.append(messageElement)
+        
+        setTimeout(() => {
+          messageElement.remove()
+        }, 5000)
+      }
+    }
+
+  
+    const submitButtonElement = document.querySelector('#submit-button')
+
+    const roomInputElement = document.querySelector('#room')
+
+    const roomInputEventHandler = (event) => {
+      socket.emit('join_room', {roomName:event.target.value})
+    }
+
+    roomInputElement?.addEventListener('input', roomInputEventHandler)
+
+
+    const messageElement = document.querySelector('#message')
+
+    const messageInputEventHandler = (event) => {
+      socket.emit('typing_message', {roomName: roomInputElement.value, username: usernameElement?.value})
+    }
+
+
+    const submitClickEventHandler = () => {
+      const usernameValue = usernameElement?.value
+      const messageValue = messageElement?.value
+      const roomNameValue = roomInputElement?.value;
+
+      socket.emit('message', {username: usernameValue, message: messageValue, roomName: roomNameValue})
+    }
+
   </script>
 </html>
