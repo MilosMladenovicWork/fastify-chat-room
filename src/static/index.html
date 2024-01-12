@@ -17,7 +17,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io.connect('http://localhost:3000/');
-
+    
     socket.on('connect',function(){
       socket.on('message', ({username, message}) => {
         const messagesContainer = document.querySelector('#messages');
@@ -29,7 +29,13 @@
         messagesContainer.append(messageElement)
       })
 
+      const usernameElement = document.querySelector('#username')
+      
       socket.on('typing_message', ({username}) => {
+        if(username === usernameElement.value){
+          return;
+        }
+        
         const messagesContainer = document.querySelector('#messages');
 
         const userIsTypingElement = messagesContainer.querySelector(`#${username}`)
@@ -58,7 +64,6 @@
         socket.emit('join_room', {roomName:event.target.value})
       })
 
-      const usernameElement = document.querySelector('#username')
 
       const messageElement = document.querySelector('#message')
 
