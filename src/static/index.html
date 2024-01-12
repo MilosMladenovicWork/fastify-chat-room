@@ -37,9 +37,17 @@
         socket.emit('join_room', {roomName:event.target.value})
       })
 
+      const usernameElement = document.querySelector('#username')
+
+      const messageElement = document.querySelector('#message')
+
+      messageElement?.addEventListener('input', (event) => {
+        socket.emit('typing_message', {roomName: roomInputElement.value, username: usernameElement?.value})
+      })
+
       submitButtonElement.addEventListener('click', () => {
-        const usernameValue = document.querySelector('#username')?.value
-        const messageValue = document.querySelector('#message')?.value
+        const usernameValue = usernameElement?.value
+        const messageValue = messageElement?.value
         const roomNameValue = roomInputElement?.value;
 
         socket.emit('message', {username: usernameValue, message: messageValue, roomName: roomNameValue})
