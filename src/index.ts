@@ -10,6 +10,7 @@ import {
 
 import fastifyStatic from "@fastify/static";
 import { fastifyStaticConfig } from "./config/fastify-static.config";
+import { logger } from "./logging/logger";
 import { joinRoomListener } from "./socket-event-listeners/join-room.listener";
 import { messageListener } from "./socket-event-listeners/message.listener";
 import { typingMessageListener } from "./socket-event-listeners/typing-message.listener";
@@ -24,6 +25,10 @@ app.listen({ port: 3000 });
 app.ready((err) => {
   if (err) throw err;
   app.io.sockets.on("connection", (socket) => {
+    logger.log("info", "connection event handler called", {
+      socketId: socket.id,
+    });
+
     messageListener({ socket, socketIo: app.io });
     joinRoomListener({ socket });
     typingMessageListener({ socket, socketIo: app.io });
