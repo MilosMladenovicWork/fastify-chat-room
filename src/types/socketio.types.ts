@@ -31,14 +31,9 @@ export interface ClientToServerEvents {
   }) => void;
 }
 
-export interface InterServerEvents {
-  ping: () => void;
-}
+export interface InterServerEvents {}
 
-export interface SocketData {
-  name: string;
-  age: number;
-}
+export interface SocketData {}
 
 export type SocketIoServer = Server<
   ClientToServerEvents,
