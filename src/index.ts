@@ -23,16 +23,24 @@ app.register(fastifyStatic, fastifyStaticConfig);
 app.listen({ port: 3000 });
 
 app.ready((err) => {
-  if (err) throw err;
-  app.io.sockets.on("connection", (socket) => {
-    logger.log("info", "connection event handler called", {
-      socketId: socket.id,
-    });
+  if (err) {
+    logger.error("app ready error", { err });
+    throw err;
+  }
+  try {
+    app.io.sockets.on("connection", (socket) => {
+      logger.log("info", "connection event handler called", {
+        socketId: socket.id,
+      });
 
-    messageListener({ socket, socketIo: app.io });
-    joinRoomListener({ socket });
-    typingMessageListener({ socket, socketIo: app.io });
-  });
+      messageListener({ socket, socketIo: app.io });
+      joinRoomListener({ socket });
+      typingMessageListener({ socket, socketIo: app.io });
+    });
+  } catch (e) {
+    logger.error("sockets error", { e });
+    throw e;
+  }
 });
 
 declare module "fastify" {
