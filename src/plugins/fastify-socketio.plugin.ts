@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import fp from "fastify-plugin";
 import { Server, ServerOptions } from "socket.io";
+import { SocketIoServer } from "../types/socketio.types";
 
 export const fastifySocketIoPlugin: FastifyPluginAsync<Partial<ServerOptions>> =
   fp(
@@ -13,3 +14,9 @@ export const fastifySocketIoPlugin: FastifyPluginAsync<Partial<ServerOptions>> =
     },
     { fastify: ">=4.x.x", name: "fastify-socket.io" }
   );
+
+declare module "fastify" {
+  interface FastifyInstance {
+    io: SocketIoServer;
+  }
+}
