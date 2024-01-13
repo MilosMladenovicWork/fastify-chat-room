@@ -16,7 +16,7 @@ const joinRoomListenerHandler = (
   },
   { roomName }: { roomName: string }
 ) => {
-  logger.log("info", "join_room event handler called", { roomName });
+  logger.log("info", "join_room event handler called", { roomName, rooms });
 
   if (!rooms.includes(roomName)) {
     rooms.push(roomName);
