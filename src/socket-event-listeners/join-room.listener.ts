@@ -1,3 +1,4 @@
+import { logger } from "../logging/logger";
 import { rooms } from "../state/rooms";
 import { SocketIoSocket } from "../types/socketio.types";
 
@@ -15,6 +16,8 @@ const joinRoomListenerHandler = (
   },
   { roomName }: { roomName: string }
 ) => {
+  logger.log("info", "join_room event handler called", { roomName });
+
   if (!rooms.includes(roomName)) {
     rooms.push(roomName);
   }

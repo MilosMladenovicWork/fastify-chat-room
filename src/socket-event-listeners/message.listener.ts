@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import { logger } from "../logging/logger";
 import {
   ClientToServerEvents,
   InterServerEvents,
@@ -37,5 +38,11 @@ const messageListenerHandler = (
     roomName,
   }: { username: string; message: string; roomName: string }
 ) => {
+  logger.log("info", "message event handler called", {
+    username,
+    message,
+    roomName,
+  });
+
   socketIo.to(roomName).emit("message", { username, message });
 };
