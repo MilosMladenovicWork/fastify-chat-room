@@ -28,7 +28,7 @@
     "fastify-socket.io": "^5.0.0",
     "socket.io": "^4.7.3",
     "winston": "^3.11.0",
-    "winston-elasticsearch": "^0.17.4"
+    "winston-logstash": "^1.2.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.8",
